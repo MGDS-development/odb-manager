@@ -1,11 +1,15 @@
-FROM openjdk:12-alpine
 
-RUN addgroup -S ids && adduser -S -g ids ids
-WORKDIR /home/app/
-RUN chown -R ids: ./ && chmod -R u+w ./
-RUN mkdir -p /ids/repo/ && chown -R ids: /ids/repo/ && chmod -R u+w /ids/repo/
-RUN mkdir -p /ids/certs/ && chown -R ids: /ids/certs/ && chmod -R u+w /ids/certs/
-COPY /target/odb-manager-1.1.0-fat.jar .
-EXPOSE 8080
-USER ids
-ENTRYPOINT ["java", "-jar", "./odb-manager-1.1.0-fat.jar"]
+FROM maven:3-openjdk-11 AS base
+
+FROM base AS build
+
+COPY src /build/src
+COPY pom.xml /build/pom.xml
+WORKDIR /build
+RUN mvn package
+
+FROM base AS deploy
+COPY --from=build /build/target/odb-manager-*-fat.jar /home/app/odb-manager.jar
+WORKDIR /home/app
+
+ENTRYPOINT ["java", "-jar", "odb-manager.jar"]
