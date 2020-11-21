@@ -212,8 +212,8 @@ public class MainVerticle extends AbstractVerticle {
         } else {
             Message header = idsMessage.getHeader().get();
             URI uri = idsMessage.getHeader().get().getId();
-            authAdapterService.isAuthenticated(header.getSecurityToken().getTokenValue(), authreply -> {
-                if (authreply.succeeded()) {
+            //authAdapterService.isAuthenticated(header.getSecurityToken().getTokenValue(), authreply -> {
+            //    if (authreply.succeeded()) {
                     try {
                         if (header instanceof DescriptionRequestMessage) {
                             LOGGER.info("DescriptionRequestMessage received.");
@@ -261,10 +261,10 @@ public class MainVerticle extends AbstractVerticle {
                         LOGGER.error("Something went wrong while parsing the IDS message.",e);
                         idsService.handleRejectionMessage(RejectionReason.INTERNAL_RECIPIENT_ERROR, uri, readyHandler);
                     }
-                } else {
-                    idsService.handleRejectionMessage(RejectionReason.NOT_AUTHENTICATED, uri, readyHandler);
-                }
-            });
+           //     } else {
+              //      idsService.handleRejectionMessage(RejectionReason.NOT_AUTHENTICATED, uri, readyHandler);
+           //     }
+          //  });
         }
 
     }

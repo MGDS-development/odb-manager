@@ -65,12 +65,15 @@ public class RegisterController {
     }
     public void register(URI uri, Connector connector, Handler<AsyncResult<HttpEntity>> readyHandler) {
         String catalogueId = UUID.randomUUID().toString();
+        LOGGER.info(connector.getId().toString());
+        LOGGER.info(catalogueId);
         catalogueManager.getCatalogueByExternalId(connector.getId().toString(),next->{
             if (next.succeeded()) {
                 LOGGER.info("Connector is already registered in the internal database. Rejecting AvailableMessage.");
                 idsService.handleRejectionMessage(RejectionReason.BAD_PARAMETERS, uri, readyHandler);
             }
             else {
+				LOGGER.info("Trying to register connector!");
                 try {
                     graphManager.create(connector.getId().toString(), serializer.serialize(connector), graphCreationResult -> {
                         if (graphCreationResult.succeeded()) {

@@ -125,6 +125,7 @@ public class DatabaseServiceImpl implements DatabaseService {
             SQLConnection connection = result.result();
             connection.queryWithParams(queryString, params, query -> {
                 if (query.succeeded()) {
+					LOGGER.info(query.toString());
                     ResultSet rs = query.result();
                     next.handle(Future.succeededFuture(rs.getRows()));
                     connection.close();

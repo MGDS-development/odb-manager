@@ -62,7 +62,7 @@ public class IDSService {
                                     ._securityToken_(new DynamicAttributeTokenBuilder(new URI(reply.result().getString("baseUrl")+"#DAT"))
                                             ._tokenFormat_(TokenFormat.JWT)
                                             ._tokenValue_(tokenReply.result())
-                                            .build())
+                                            .build()) 
                                     .build();
                             resultHandler.handle(Future.succeededFuture(message));
                         } catch (URISyntaxException e) {
@@ -126,7 +126,7 @@ public class IDSService {
                                     ._securityToken_(new DynamicAttributeTokenBuilder(new URI(reply.result().getString("baseUrl")+"#DAT"))
                                             ._tokenFormat_(TokenFormat.JWT)
                                             ._tokenValue_(tokenReply.result())
-                                            .build())
+                                            .build()) 
                                     ._rejectionReason_(rejectionReason)
                                     .build();
                             resultHandler.handle(Future.succeededFuture(message));
@@ -157,7 +157,7 @@ public class IDSService {
                             ._securityToken_(new DynamicAttributeTokenBuilder(new URI(config.getString("baseUrl")+"#DAT"))
                                     ._tokenFormat_(TokenFormat.JWT)
                                     ._tokenValue_(tokenReply.result())
-                                    .build())
+                                    .build()) 
                             .build()));
                 } catch (URISyntaxException e) {
                     LOGGER.error(e);
